@@ -1,4 +1,5 @@
 require 'tdd_project'
+require 'stack'
 
 describe "#my_uniq" do 
    it "removes repeated elements" do
@@ -42,5 +43,27 @@ describe "#stock_picker" do
    
    it "returns only for increases in stock price" do
       expect(stock_picker([-2,-1,0,-3])).to eq([0,2])
+   end
+end
+
+describe Stack do
+   subject(:stack){Stack.new}
+   describe "initialize" do
+      it "instantiates a stack" do
+         expect(stack.tower.is_a?(Array)).to be true
+      end
+   end
+   describe "#add" do
+      it "adds an element to the top of the tower" do
+         stack.add(3)
+         expect(stack.tower).to eq([3])
+      end   
+   end
+   describe "#pop" do
+      it "takes the top element off of the tower" do
+         stack.add(3)
+         expect(stack.pop).to eq(3)
+         expect(stack.tower).to eq([])
+      end
    end
 end
