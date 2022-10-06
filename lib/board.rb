@@ -19,4 +19,8 @@ class Board
         @towers[tower_2].add(disc)
     end
 
+    def game_over?
+        @towers[2].tower == [3,2,1]
+    end
+
 end
