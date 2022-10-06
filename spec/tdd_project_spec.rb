@@ -1,5 +1,6 @@
 require 'tdd_project'
 require 'stack'
+require 'board'
 
 describe "#my_uniq" do 
    it "removes repeated elements" do
@@ -58,12 +59,47 @@ describe Stack do
          stack.add(3)
          expect(stack.tower).to eq([3])
       end   
+      it "checks if element can be added" do
+         stack.add(1)
+         expect {stack.add(2)}.to raise_error('cannot put there')
+      end
    end
    describe "#pop" do
       it "takes the top element off of the tower" do
          stack.add(3)
          expect(stack.pop).to eq(3)
          expect(stack.tower).to eq([])
+      end
+   end
+end
+
+describe Board do
+   subject(:board){Board.new}
+
+   describe "#initialize" do
+      it "instantiates the board" do
+         expect(board.towers.length).to eq(3) 
+      end
+      it "checks that a tower is 3,2,1" do
+         expect(board.towers[0].tower).to eq([3,2,1])
+      end
+   end
+
+   describe "#move" do
+      it "takes something from the top on one stack and puts it on another" do
+         board.move([0,1])
+         expect(board.towers[0].tower).to eq([3,2])
+         expect(board.towers[1].tower).to eq([1])
+      end
+      it "doesn't work if disc is too big for new tower" do
+         board.move([0,1])
+         expect{board.move([0,1])}.to raise_error('disc too big')
+      end
+      it "can't move if there's no disc" do
+         expect{board.move([1,2])}.to raise_error("no disc :'(")
+      end
+      it "throws an error if indices are invalid" do
+         expect{board.move([1,3])}.to raise_error("out of bounds -- penalty kick!")
       end
    end
 end
