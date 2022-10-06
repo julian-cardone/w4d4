@@ -16,4 +16,19 @@ class Array
         end
         new_arr
     end
+
+    def my_transpose
+        return [[]] if self == [[]]
+        raise "not a 2d array" unless self[0].is_a?(Array)
+        raise "Not a square" if self.length != self[0].length
+        new_arr = []
+        (0...self.length).each do |i|
+            new_sub_arr = []
+            (0...self.length).each do |j|
+                new_sub_arr << self[j][i]
+            end
+            new_arr << new_sub_arr
+        end
+        return new_arr
+    end
 end

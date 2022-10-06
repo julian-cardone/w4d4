@@ -12,4 +12,19 @@ describe "#two_sum" do
    end
 end
 
-describe 
+describe "#my_transpose" do
+   it "raises an error if the array is not a square" do
+      expect{[[1,2],[3,4],[5,6]].my_transpose}.to raise_error("Not a square")
+   end
+   it "returns an empty array or 1 element array" do
+      expect([[]].my_transpose).to eq([[]])
+      expect([[1]].my_transpose).to eq([[1]])
+   end
+   it "raises an error if there are no subarrays" do
+      expect{[1,2].my_transpose}.to raise_error("not a 2d array")
+   end
+   it "switches the rows and collumns of a 2d array" do
+      expect([[1,2],[3,4]].my_transpose).to eq([[1,3],[2,4]])
+   end
+
+end
