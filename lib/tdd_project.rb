@@ -32,3 +32,18 @@ class Array
         return new_arr
     end
 end
+
+def stock_picker(arr)
+    raise 'problem' if !arr.is_a?(Array)
+    raise 'another problem' if arr.flatten != arr
+    max = [0,0]
+    (0...arr.length).each do |i|
+        (0...arr.length).each do |j|
+            if j > i
+                difference = arr[j] - arr[i]
+                max = [i,j] if difference > max[1] - max[0]
+            end
+        end
+    end
+    max
+end

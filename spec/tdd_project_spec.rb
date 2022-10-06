@@ -26,5 +26,21 @@ describe "#my_transpose" do
    it "switches the rows and collumns of a 2d array" do
       expect([[1,2],[3,4]].my_transpose).to eq([[1,3],[2,4]])
    end
+end
 
+describe "#stock_picker" do
+   it "has to be array" do
+      expect{stock_picker(3)}.to raise_error('problem')
+   end
+   it "must be 1d array" do
+      expect{stock_picker([[2]])}.to raise_error('another problem')
+   end
+
+   it "returns the highest difference of two elements" do
+      expect(stock_picker([1,2,3,4,5,6,7])).to eq([0,6])
+   end
+   
+   it "returns only for increases in stock price" do
+      expect(stock_picker([-2,-1,0,-3])).to eq([0,2])
+   end
 end
