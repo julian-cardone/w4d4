@@ -4,8 +4,8 @@ class Game
 
     attr_reader :board
 
-    def initialize
-        @board = Board.new
+    def initialize(num_discs = 3)
+        @board = Board.new(num_discs)
     end
 
     def process_input(string)
@@ -37,5 +37,5 @@ class Game
     end
 end
 
-test = Game.new
+test = Game.new(4)
 test.play

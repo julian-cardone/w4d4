@@ -1,6 +1,7 @@
 require 'tdd_project'
 require 'stack'
 require 'board'
+require 'game'
 
 describe "#my_uniq" do 
    it "removes repeated elements" do
@@ -78,7 +79,7 @@ describe Board do
 
    describe "#initialize" do
       it "instantiates the board" do
-         expect(board.towers.length).to eq(3) 
+         expect(board.towers.length).to eq(3)
       end
       it "checks that a tower is 3,2,1" do
          expect(board.towers[0].tower).to eq([3,2,1])
@@ -102,4 +103,67 @@ describe Board do
          expect{board.move([1,3])}.to raise_error("out of bounds -- penalty kick!")
       end
    end
+
+   subject(:board2){Board.new(4)}
+
+   describe "#initialize" do
+      it "checks that a tower is 4,3,2,1" do
+         expect(board2.towers[0].tower).to eq([4,3,2,1])
+      end
+   end
+
+   describe "#move" do
+      it "takes something from the top on one stack and puts it on another" do
+         board2.move([0,1])
+         expect(board2.towers[0].tower).to eq([4,3,2])
+         expect(board2.towers[1].tower).to eq([1])
+      end
+      it "doesn't work if disc is too big for new tower" do
+         board2.move([0,1])
+         expect{board2.move([0,1])}.to raise_error('disc too big')
+      end
+      it "can't move if there's no disc" do
+         expect{board2.move([1,2])}.to raise_error("no disc :'(")
+      end
+      it "throws an error if indices are invalid" do
+         expect{board2.move([1,3])}.to raise_error("out of bounds -- penalty kick!")
+      end
+   end
+
+   describe "#game_over?" do
+      it "returns false if tower 3 is incomplete" do
+         expect(board.game_over?).to be false
+      end
+      it "returns true if tower 3 is complete" do
+         board.move([0,2])
+         board.move([0,1])
+         board.move([2,1])
+         board.move([0,2])
+         board.move([1,0])
+         board.move([1,2])
+         board.move([0,2])
+         expect(board.game_over?).to be true
+      end
+   end
+   
 end
+describe Game do
+   subject(:game){Game.new}
+
+   describe "initialize" do
+      it "starts the game" do
+         expect(game.board).to be_truthy
+      end
+   end
+   describe "#process_input" do
+      it "turns input from a string into an array" do
+         expect(game.process_input("0,0")).to eq([0,0])
+      end
+   end
+   describe "valid_input?" do
+      it "returns false if input is not a string" do
+         expect(game.valid_input?(0)).to be false
+      end
+   end
+end
+

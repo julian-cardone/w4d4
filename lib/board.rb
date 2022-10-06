@@ -3,9 +3,10 @@ require_relative "stack"
 class Board
     attr_reader :towers
 
-    def initialize
+    def initialize(num_discs = 3)
         @towers = Array.new(3) { Stack.new }
-        @towers[0].tower = [3,2,1]
+        (1..num_discs).each { |i| @towers[0].tower.unshift(i) }
+        @full_tower = @towers[0].tower.dup
     end
 
     def move(arr)
@@ -20,7 +21,7 @@ class Board
     end
 
     def game_over?
-        @towers[2].tower == [3,2,1]
+        @towers[2].tower == @full_tower
     end
 
 end
